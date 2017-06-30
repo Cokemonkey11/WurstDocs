@@ -18,7 +18,7 @@ beginner-friendly and readable to non programmers.
 While we know that WurstScript won't replace vJass in the WC3 mapping scene (one reason being tons of vJass scripts that can't be easily ported), we still hope it will  serve as a very good alternative, in particular for users that are trying to learn Jass.
 
 > Note that this manual is not a beginner's tutorial and expects the reader to have prior knowledge in programming. 
-[Click here for a beginner's guide.](start.html)
+[Click here for a beginner's guide.](tutorials.html)
 
 ### Values and Types
 
