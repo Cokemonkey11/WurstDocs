@@ -8,6 +8,8 @@ sections:
 
 ### Philosophy
 
+WurstScript is am imperative, object-oriented, statically-typed, beginner-friendly programming language.
+
 WurstScript aims to provide an easy and comfortable workflow to produce readable and maintainable code.
 Ease of use and stress-free map development take higher priority than execution speed of the produced code.
 Wurst is easy to use and learn, especially with prior knowledge of Jass or another programming language, while still staying
@@ -16,6 +18,23 @@ beginner-friendly and readable to non programmers.
 While we know that WurstScript won't replace vJass in the WC3 mapping scene (one reason being tons of vJass scripts that can't be easily ported), we still hope it will  serve as a very good alternative, in particular for users that are trying to learn Jass.
 
 > Note that this manual is not a beginner's tutorial and expects the reader to have prior knowledge in programming. [Click here for a beginner's guide.](start.md)
+
+### Values and Types
+
+WurstScript is a statically typed language. This means variables can only hold values of the same type. Additionally since all types are determined at compiletime,
+incorrect assignments will throw errors at compiletime.
+
+Wurst has the same 5 basic types (or primitives) as Jass: **null, boolean, int, real, string**
+
+In this example you can see the static types of the variables on the left. If the assignment on the right isn't of the same type, it will throw an error.
+```wurst
+int i = 0 // OK
+int j = "no" // Type Error
+string r = "yes" // OK
+string s = i // Type Error
+```
+
+
 
 ### Syntax
 
