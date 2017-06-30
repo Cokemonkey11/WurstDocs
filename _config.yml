@@ -3,7 +3,7 @@
 #
 url: https://frotty.github.io/WurstSite/
 baseurl: 
-highlighter: rogue
+highlighter: rouge
 title: &site_title WurstScript
 description: &site_description Programming language that compiles to Jass
 branding:
