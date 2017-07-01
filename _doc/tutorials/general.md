@@ -2,6 +2,4 @@
 title: General
 ---
 
-## General
-
-Tutorials go here
+-Work in Progress-
