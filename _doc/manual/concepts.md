@@ -257,14 +257,14 @@ It also contains some members to help iterating. A new instance if LLIterator is
 
 
 WurstScript supports the following shorthands for assignments:
-
-    i++         // i = i + 1
-    i--         // i = i - 1
-    x += y      // x = x + y
-    x -= y      // x = x - y
-    x *= y      // x = x * y
-    x /= y      // x = x / y
-
+```wurst
+i++         // i = i + 1
+i--         // i = i - 1
+x += y      // x = x + y
+x -= y      // x = x - y
+x *= y      // x = x * y
+x /= y      // x = x / y
+```
 Because these shorthands simply get translated into their equivalents, they can
 be used with overloaded operators, too.
 
@@ -412,12 +412,12 @@ The initialization rules for Wurst are simple:
 If you get a Cyclic init dependency between packages, you have to manually define which package can be
 initialized later.
 This is done by adding the keyword `initlater` to the import of the package:
-
+```wurst
     package A
     import initlater B
     import public initlater C
     import D
-
+```
 Here only package `D` is guaranteed to be initialized before package `A`.
 Packages `B` and `C` are allowed to be initialized later.
 

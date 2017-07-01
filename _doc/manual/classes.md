@@ -10,11 +10,11 @@ sections:
 Classes are easy, powerful and very helpful constructs. A _class_ defines data and related functions working with this data. Take a look at this small example:
 
 
-
+```wurst
     Caster dummyCaster = new Caster(200.0, 400.0)
     dummyCaster.castFlameStrike(500.0, 30.0)
     destroy dummyCaster
-
+```
 
 In this example we created a Caster named "dummyCaster" at the location(200, 400).
 Then we ordered **dummyCaster** to cast a flame strike at another position and finally we destroyed **dummyCaster**.
