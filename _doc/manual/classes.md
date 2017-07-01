@@ -11,9 +11,9 @@ Classes are easy, powerful and very helpful constructs. A _class_ defines data a
 
 
 ```wurst
-    Caster dummyCaster = new Caster(200.0, 400.0)
-    dummyCaster.castFlameStrike(500.0, 30.0)
-    destroy dummyCaster
+Caster dummyCaster = new Caster(200.0, 400.0)
+dummyCaster.castFlameStrike(500.0, 30.0)
+destroy dummyCaster
 ```
 
 In this example we created a Caster named "dummyCaster" at the location(200, 400).
@@ -31,13 +31,13 @@ class Caster // opening the class-block. "Caster" is the name of the class
     unit u // class variables can be defined anywhere inside a class
 
     construct(real x, real y)
-        u = CreateUnit(...)
+        u = createUnit(...)
 
     function castFlameStrike(real x, real y)
-        UnitIssueOrder(u, ...)
+        u.issueOrder(...)
 
     ondestroy
-        KillUnit(u)
+        u.kill()
 ```
 
 ## Constructors
@@ -51,7 +51,7 @@ class Pair
     int a
     int b
 
-    construct( int pA, int pB )
+    construct(int pA, int pB)
             a = pA
             b = pB
 
@@ -75,13 +75,13 @@ class Pair
     int a
     int b
 
-    construct( int pA, int pB )
-            a = pA
-            b = pB
+    construct(int pA, int pB)
+        a = pA
+        b = pB
 
-    construct( int pA, int pB, int pC )
-            a = pA
-            b = pB
+    construct(int pA, int pB, int pC)
+        a = pA
+        b = pB
         a += pC
         b += pC
 
@@ -105,9 +105,9 @@ class Pair
     int b
 
     // With the this keyword we can access the classmembers
-    construct( int a, int b )
-            this.a = a
-            this.b = b
+    construct(int a, int b)
+        this.a = a
+        this.b = b
 ```
 
 ## ondestroy
@@ -118,11 +118,10 @@ Ondestroy blocks are defined as previously shown
 ```wurst
 class UnitWrapper
     unit u
-
     ...
 
     ondestroy
-        RemoveUnit(u)
+        u.remove()
 ```
 
 
@@ -450,17 +449,17 @@ class ExpertListener implements Listener
 
 
     function onAttack( real x, real y ) returns boolean
-        AddSpecialEffect(EFFECT_STRING, x ,y)
+        flashEffect(EFFECT_STRING, x ,y)
 ```
 
 
 An _interface_ is a group of related functions with empty bodies.
 If a class implements a certain interface it has to replace all the empty functions from the interface.
 A class can _implement_ multiple interfaces, meaning that it complies to more interface requirements at the same time.
-
-    class ExampleClass implements Interface1, Interface2, ...
-            // all functions from the implemented interfaces
-
+```wurst
+class ExampleClass implements Interface1, Interface2, ...
+    // all functions from the implemented interfaces
+```
 
 With interfaces (and modules if implicit) you can now up- and downcast any Class that implements it.
 This is especially useful for saving all instances from classes that inherit 1 interface in only 1 List/Array
@@ -624,8 +623,6 @@ module PositiveIntContainer
  * each function of a module must be declared public or private
  * if a class uses a module it inherits only the public functions of the module
     * you can use a module with *private* (not implemented yet). This will let you use the functionality of the module without exposing its functions to the outside.
-
-
 
 
 ## Overriding Functions

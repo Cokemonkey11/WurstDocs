@@ -56,6 +56,10 @@ pre[class*="language-"] {
 	color: #569cd6;
 }
 
+.token.annotation {
+	color: #569cd6;
+}
+
 .namespace {
 	opacity: .7;
 }
