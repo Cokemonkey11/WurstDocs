@@ -413,10 +413,10 @@ If you get a Cyclic init dependency between packages, you have to manually defin
 initialized later.
 This is done by adding the keyword `initlater` to the import of the package:
 ```wurst
-    package A
-    import initlater B
-    import public initlater C
-    import D
+package A
+import initlater B
+import public initlater C
+import D
 ```
 Here only package `D` is guaranteed to be initialized before package `A`.
 Packages `B` and `C` are allowed to be initialized later.
