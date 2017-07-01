@@ -7,5 +7,6 @@ icon:
 color: blue
 sections:
   - /manual/introduction
-
+  - /manual/concepts
+  - /manual/classes
 ---

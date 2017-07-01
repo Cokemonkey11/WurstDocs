@@ -2,18 +2,19 @@
 title: Introduction
 sections:
 - Philosophy
+- Values and Types
 - Syntax
 - Basics
 ---
 
 ### Philosophy
 
-WurstScript is am imperative, object-oriented, statically-typed, beginner-friendly programming language.
+WurstScript is an imperative, object-oriented, statically-typed, beginner-friendly programming language.
 
 WurstScript aims to provide an easy and comfortable workflow to produce readable and maintainable code.
 Ease of use and stress-free map development take higher priority than execution speed of the produced code.
-Wurst is easy to use and learn, especially with prior knowledge of Jass or another programming language, while still staying
-beginner-friendly and readable to non programmers.
+Wurst is easy to use and learn, especially with prior knowledge of Jass or any other programming language, while still staying
+simple and readable to non-programmers.
 
 While we know that WurstScript won't replace vJass in the WC3 mapping scene (one reason being tons of vJass scripts that can't be easily ported), we still hope it will  serve as a very good alternative, in particular for users that are trying to learn Jass.
 
@@ -23,7 +24,7 @@ While we know that WurstScript won't replace vJass in the WC3 mapping scene (one
 ### Values and Types
 
 WurstScript is a statically typed language. This means variables can only hold values of the same type. Additionally since all types are determined at compiletime,
-incorrect assignments will throw errors at compiletime.
+incorrect assignments will throw errors.
 
 Wurst has the same 5 basic types (or primitives) as Jass: **null, boolean, int, real, string**
 
@@ -35,12 +36,9 @@ string r = "yes" // OK
 string s = i // Type Error
 ```
 
-
-
 ### Syntax
 
-The WurstScript Syntax uses indention to define Blocks, instead of using curly
-brackets (like Java) or keywords like 'endif' (like Jass). You can use either spaces or tabs for indentation, but mixing both will throw a warning.
+WurstScript uses indentation based syntax to define Blocks. You can use either spaces or tabs for indentation, but mixing both will throw a warning.
 In the following we use the word "tab" to refer to the tab character or to 4 space characters.
 
 ```wurst
@@ -59,9 +57,7 @@ if condition
 	ifStatements
 endif
 nextStatements
-
 ```
-
 
 In general newlines come at the end of a statement, except for the following cases:
 
@@ -82,7 +78,7 @@ someUnit..setX(...)
 new Object()..setName("Foo")..move()
 ```
 
-WurstScript tries to avoid using excessive verbosity and symbols to stay concise and readable.
+WurstScript tries to avoid excessive verbosity and symbols, to stay concise and readable.
 
 
 ### Basics
@@ -183,5 +179,6 @@ function getUnitInfo( unit u )
 	let sum = x + y
 ```
 
-With these basic concepts you should be able to do anything you already know for Jass.
-The syntax is a little bit different of course, but this is covered in the next chapter.
+
+With these basic concepts you should be able to do anything you already know from Jass.
+We will touch on more advanced topics in the next chapters.
