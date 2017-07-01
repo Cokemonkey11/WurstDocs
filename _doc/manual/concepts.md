@@ -11,39 +11,40 @@ sections:
 ## Expressions
 
 Semi-Formal syntax:
-
-    Expr ::=
-          Expr + Expr
-        | Expr - Expr
-        | Expr / Expr       // real division
-        | Expr div Expr     // integer division
-        | Expr % Expr       // real modulo
-        | Expr mod Expr     // integer modulo
-        | Expr and Expr
-        | Expr or Expr
-        | Expr < Expr
-        | Expr <= Expr
-        | Expr > Expr
-        | Expr >= Expr
-        | Expr == Expr
-        | Expr != Expr
-        | - Expr
-        | not Expr
-        | IDENTIFIER                // variable access
-        | IDENTIFIER(Expr, Expr, ...)       // function call
-        | Expr . IDENTIFIER             // member variable
-        | Expr . IDENTIFIER(Expr, Expr, ...)    // member function
-        | Expr .. IDENTIFIER(Expr, Expr, ...)   // member function, same as single dot
-                                                // but returns the receiver type
-        | new IDENTIFIER(Expr, Expr, ...)       // constructor call
-        | destroy Expr                  // destroy object
-        | Expr castTo Type              // casting
-        | Expr instanceof Type          // instance checking
-        | begin
-            Statements
-          end // statement expr
-        | (param1, param2, ...) -> Expr  // anonymous function
-        | (Expr)                        // parantheses
+```wurst
+Expr ::=
+        Expr + Expr
+    | Expr - Expr
+    | Expr / Expr       // real division
+    | Expr div Expr     // integer division
+    | Expr % Expr       // real modulo
+    | Expr mod Expr     // integer modulo
+    | Expr and Expr
+    | Expr or Expr
+    | Expr < Expr
+    | Expr <= Expr
+    | Expr > Expr
+    | Expr >= Expr
+    | Expr == Expr
+    | Expr != Expr
+    | - Expr
+    | not Expr
+    | IDENTIFIER                // variable access
+    | IDENTIFIER(Expr, Expr, ...)       // function call
+    | Expr . IDENTIFIER             // member variable
+    | Expr . IDENTIFIER(Expr, Expr, ...)    // member function
+    | Expr .. IDENTIFIER(Expr, Expr, ...)   // member function, same as single dot
+                                            // but returns the receiver type
+    | new IDENTIFIER(Expr, Expr, ...)       // constructor call
+    | destroy Expr                  // destroy object
+    | Expr castTo Type              // casting
+    | Expr instanceof Type          // instance checking
+    | begin
+        Statements
+        end // statement expr
+    | (param1, param2, ...) -> Expr  // anonymous function
+    | (Expr)                        // parantheses
+```
 
 
 An _IDENTIFIER_ is a name of a variable or function. It may start with letters and may
@@ -58,19 +59,19 @@ a separate chapter about generics.
 Use the cascade operator `..` is similar to the normal `.` operator and can be used for calling methods, but instead of returning the result
 of the called method, the cascade operator returns the receiver. This makes it possible to perform a number of operations on the same object.
 Here is a small example
-
-    CreateTrigger()
-        ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_ISSUED_ORDER)
-        ..addCondition(Condition(function cond))
-        ..addAction(function action)
-
+```wurst
+CreateTrigger()
+    ..registerAnyUnitEvent(EVENT_PLAYER_UNIT_ISSUED_ORDER)
+    ..addCondition(Condition(function cond))
+    ..addAction(function action)
+```
 The above code is basically equivalent to:
-
-    let temp = CreateTrigger()
-    temp.registerAnyUnitEvent(EVENT_PLAYER_UNIT_ISSUED_ORDER)
-    temp.addCondition(Condition(function cond))
-    temp.addAction(function action)
-
+```wurst
+let temp = CreateTrigger()
+temp.registerAnyUnitEvent(EVENT_PLAYER_UNIT_ISSUED_ORDER)
+temp.addCondition(Condition(function cond))
+temp.addAction(function action)
+```
 
 
 ## Statements
@@ -81,102 +82,103 @@ The simplest statement is the _skip_ statement. It has no effect and can be used
 
 ### If
 
+```wurst
+if x > y
+    ... // the content inside the block simply has to be indent
+else if x < y // closing the if, opening the elseif-block
+    ...
+else
+    ...
+// Closing the if by indenting back
 
-    if x > y
-        ... // the content inside the block simply has to be indent
-    else if x < y // closing the if, opening the elseif-block
-        ...
-    else
-        ...
-    // Closing the if by indenting back
+if x > y or x <= z and "blub" != "blah"
+    print("if is true")
+print("if done.")
 
-    if x > y or x <= z and "blub" != "blah"
-        print("if is true")
-    print("if done.")
-
-    if GetSpellAbilityId() == 'A000'
-        AddSpecialEffect( GetSpellTargetX(), GetSpellTargetY(), FX_PATH )
-
+if GetSpellAbilityId() == 'A000'
+    AddSpecialEffect( GetSpellTargetX(), GetSpellTargetY(), FX_PATH )
+```
 ### Switch
-
-    // i is of type int
-    switch i
-        case 1
-            print("1")
-        case 3
-            print("3")
-        case 88
-            print("88")
-        default
-            print("not implemented")
-
+```wurst
+// i is of type int
+switch i
+    case 1
+        print("1")
+    case 3
+        print("3")
+    case 88
+        print("88")
+    default
+        print("not implemented")
+```
 As you see in the example, a switch statement is basically a nicer syntax for
 nesting ifs and else ifs, with the special default case.
 
 ### Loops
-
-    while a > b // while-loop with input condition
-        ...
-
-    for int i = 0 to 10 // for-loop
-        ...
-
-    for int i = 0 to 10 step 2 // for-loop with step 2
-        ...
-
-    for int i = 10 downto 0 // wurst can also count downwards
-        ...
-
-    for unit u in someGroup // loop over all units in a group
-        ...
-
-    for unit u from someGroup // loop over all units in group and remove the units from the group
-        ...
-
-    for int i in myList
-        ...
-
-
-In for loops you can also omit the type of the loop variable.
-
-    for i = 0 to 10
-    for u in someGroup
+```wurst
+while a > b // while-loop with input condition
     ...
 
+for int i = 0 to 10 // for-loop
+    ...
+
+for int i = 0 to 10 step 2 // for-loop with step 2
+    ...
+
+for int i = 10 downto 0 // wurst can also count downwards
+    ...
+
+for unit u in someGroup // loop over all units in a group
+    ...
+
+for unit u from someGroup // loop over all units in group and remove the units from the group
+    ...
+
+for int i in myList
+    ...
+```
+
+In for loops you can also omit the type of the loop variable.
+```wurst
+for i = 0 to 10
+    ...
+for u in someGroup
+    ...
+```
 ### For-in/from Loops
 
 The for-in loop lets you iterate over any object which provides an iterator.
 A for-in loop can be transformed into an equivalent while-loop very easily:
 
+```wurst
+for A a in b
+    Statements
 
-    for A a in b
-        Statements
-
-    // is equivalent to:
-    let iterator = b.iterator()
-    while iterator.hasNext()
-        A a = iterator.next()
-        Statements*
-    iterator.close()
-
+// is equivalent to:
+let iterator = b.iterator()
+while iterator.hasNext()
+    A a = iterator.next()
+    Statements*
+iterator.close()
+```
 
 **Note** that iterator.close() will also be called before any return statement inside the body of the while loop.
 
 If you already have an iterator or want to access further functions of the iterator you can use the for-from loop.
 The translation is very similar:
+```wurst
+let iterator = myList.iterator()
+for segment from iterator
+    //Statements
+iterator.close()
 
-    let iterator = myList.iterator()
-    for segment from iterator
-        //Statements
-    iterator.close()
-
-    // is equivalent to:
-    let iterator = myList.iterator()
-    while iterator.hasNext()
-        segment = iterator.next()
-        //Statements
-    iterator.close()
-
+// is equivalent to:
+let iterator = myList.iterator()
+while iterator.hasNext()
+    segment = iterator.next()
+    //Statements
+iterator.close()
+```
 **Note** that you have to close the iterator yourself.
 
 ### Iterators
@@ -200,54 +202,54 @@ Most often the iterator just destroys itself in the close function.
 Look at the 2 examples from the standard library:
 
 **Group-Iterator**
+```wurst
+public function group.iterator() returns group
+    // return a copy of the group:
+    bj_groupAddGroupDest = CreateGroup()
+    ForGroup(this, function GroupAddGroupEnum)
+    return bj_groupAddGroupDest
 
-    public function group.iterator() returns group
-        // return a copy of the group:
-        bj_groupAddGroupDest = CreateGroup()
-        ForGroup(this, function GroupAddGroupEnum)
-        return bj_groupAddGroupDest
+public function group.hasNext() returns boolean
+    return FirstOfGroup(this) != null
 
-    public function group.hasNext() returns boolean
-        return FirstOfGroup(this) != null
+public function group.next() returns unit
+    let u = FirstOfGroup(this)
+    GroupRemoveUnit(this, u)
+    return u
 
-    public function group.next() returns unit
-        let u = FirstOfGroup(this)
-        GroupRemoveUnit(this, u)
-        return u
-
-    public function group.close()
-        DestroyGroup(this)
-
+public function group.close()
+    DestroyGroup(this)
+```
 As you can see, the iterator is a group, therefore the group needs to provide the functions mentioned above.
 This is done via extension functions.
 
 **LinkedList-Iterator**
+```wurst
+public class LinkedList<T>
+    ...
 
-    public class LinkedList<T>
-        ...
+    // get an iterator for this list
+    function iterator() returns LLIterator<T>
+        return new LLIterator(dummy)
 
-        // get an iterator for this list
-        function iterator() returns LLIterator<T>
-            return new LLIterator(dummy)
+class LLIterator<Q>
+    LLEntry<Q> dummy
+    LLEntry<Q> current
 
-    class LLIterator<Q>
-        LLEntry<Q> dummy
-        LLEntry<Q> current
+    construct(LLEntry<Q> dummy)
+        this.dummy = dummy
+        this.current = dummy
 
-        construct(LLEntry<Q> dummy)
-            this.dummy = dummy
-            this.current = dummy
+    function hasNext() returns boolean
+        return current.next != dummy
 
-        function hasNext() returns boolean
-            return current.next != dummy
+    function next() returns Q
+        current = current.next
+        return current.elem
 
-        function next() returns Q
-            current = current.next
-            return current.elem
-
-        function close()
-            destroy this
-
+    function close()
+        destroy this
+```
 The LinkedList Iterator is a little different, because it's a class. Still it provides the needed functions and is therefore viable as iterator.
 It also contains some members to help iterating. A new instance if LLIterator is returned from the .iterator() function of the LinkedList.
 
@@ -275,34 +277,34 @@ is declared global for that package.
 When working in WurstWE, packages have to end with the **endpackage** keyword and the code inside has to be indent.
 
 In WurstEclipse however, the **endpackage** can be omitted when the code inside is not indented.
-
-    package SomeWurstWePackage
-        // Only for legacy WurstWE
-        ...
-        (code)
-    endpackage
-
-    package SomeWursteclipsePackage
+```wurst
+package SomeWurstWePackage
+    // Only for legacy WurstWE
     ...
     (code)
+endpackage
 
+package SomeWursteclipsePackage
+...
+(code)
+```
 
 
 ## Imports
 
 Packages can import other packages to access classes, functions, variables, etc. that are defined public.
 
+```wurst
+// declaring
+package SomePackage
 
-    // declaring
-    package SomePackage
-
-    // importing
-    package Blub
-    import SomePackage
-    import AnotherPackge // importing more than 1 package
-    import MyExternalWurstFile // Import a scriptfile from the eclipseProject
-    import public PackageX // public import (see below)
-
+// importing
+package Blub
+import SomePackage
+import AnotherPackge // importing more than 1 package
+import MyExternalWurstFile // Import a scriptfile from the eclipseProject
+import public PackageX // public import (see below)
+```
 
 
 The import directive searches for packages in the wurst folder of your project and all linked projects from your wurst.dependencies file.
@@ -310,31 +312,33 @@ The import directive searches for packages in the wurst folder of your project a
 ### import public
 
 By default imported names are not exported by the package. For example the following will not compile:
+```wurst
+package A
+public constant x = 5
 
-    package A
-    public constant x = 5
+package B
+import A
 
-    package B
-    import A
-
-    package C
-    import B
-    constant z = x
-
+package C
+import B
+constant z = x
+```
 
 The variable x is usable in package B but it is not exported from B. So in package C we cannot use the variable x.
 We could fix this by simply importing A into C but sometimes you want to avoid those imports.
 Using public imports solves this problem because they will export everything that is imported. Thus the following code will work:
 
-    package A
-    public constant x = 5
+```wurst
+package A
+public constant x = 5
 
-    package B
-    import public A
+package B
+import public A
 
-    package C
-    import B
-    constant z = x
+package C
+import B
+constant z = x
+```
 
 ### The special Wurst package
 
@@ -356,26 +360,26 @@ This has no impact on the generated code but throws an error when trying to comp
 
 
 ### Examples
+```wurst
+package First
+int i // (private by default) Visible inside the package
+public int j // public, gets exported
 
-    package First
-    int i // (private by default) Visible inside the package
-    public int j // public, gets exported
+package Second
+import First
 
-    package Second
-    import First
-
-    int k = i // Error
-    int m = j // Works, because j is public
+int k = i // Error
+int m = j // Works, because j is public
 
 
-    package Foo
-    constant int myImportantNumber = 21364 // has to be initialized with declaration
+package Foo
+constant int myImportantNumber = 21364 // has to be initialized with declaration
 
-    function blub()
-        myImportantNumber = 123 // Error
+function blub()
+    myImportantNumber = 123 // Error
 
-    public constant int myPrivateNumber2 = 123 // Correct keyword order
-
+public constant int myPrivateNumber2 = 123 // Correct keyword order
+```
 
 
 ## Init blocks
@@ -385,11 +389,11 @@ All operations inside the init block of a package are executed at mapstart.
 
 At the beginning of an init block you can assume that all global variables inside the
 current package are initialized.
-
-    package MyPackage
-    init
-        print("this is the initblock")
-
+```wurst
+package MyPackage
+init
+    print("this is the initblock")
+```
 
 *Note:* Since wc3 has a micro op limitation, too many operations inside init-blocks may stop it from fully executing. In order to avoid this you should only place map-init Stuff inside the init blocks and use timers and own inits for the other stuff.
 
@@ -430,22 +434,22 @@ This has the effect that the variable with the same name in the original package
 the variable in the configuration package.
 In the original package, the variable should be annotated with `@configurable` to signal that it is safe to configure.
 Here is an example:
+```wurst
+package Example
+@configurable int x = 5
 
-    package Example
-    @configurable int x = 5
-
-    package Example_config
-    @config int x = 42
-
+package Example_config
+@config int x = 42
+```
 Configuring functions works basically the same:
-
-    package Example
-    @configurable public function math(int x, int y) returns int
-        return x + y
-
-
-    package Example_config
-    @config public function math(int x, int y) returns int
-        return x*y
+```wurst
+package Example
+@configurable public function math(int x, int y) returns int
+    return x + y
 
 
+package Example_config
+@config public function math(int x, int y) returns int
+    return x*y
+
+```

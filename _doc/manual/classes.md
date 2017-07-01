@@ -26,20 +26,19 @@ A class can also define how a new object is constructed (_construct_) and what s
 
 Defining a caster-class might look like this:
 
+```wurst
+class Caster // opening the class-block. "Caster" is the name of the class
+    unit u // class variables can be defined anywhere inside a class
 
-    class Caster // opening the class-block. "Caster" is the name of the class
-        unit u // class variables can be defined anywhere inside a class
+    construct(real x, real y)
+        u = CreateUnit(...)
 
-        construct(real x, real y)
-            u = CreateUnit(...)
+    function castFlameStrike(real x, real y)
+        UnitIssueOrder(u, ...)
 
-        function castFlameStrike(real x, real y)
-            UnitIssueOrder(u, ...)
-
-        ondestroy
-            KillUnit(u)
-
-
+    ondestroy
+        KillUnit(u)
+```
 
 ## Constructors
 
@@ -47,49 +46,49 @@ WurstScript allows you to define your own constructors for each class. A constru
 is a function to _construct_ a new instance of a class.
 The constructor is called when creating the class via the _new_ keyword and allows operations being done to the class-instance before returning it.
 
+```wurst
+class Pair
+    int a
+    int b
 
-    class Pair
-        int a
-        int b
+    construct( int pA, int pB )
+            a = pA
+            b = pB
 
-        construct( int pA, int pB )
-                a = pA
-                b = pB
-
-        function add() returns int
-                return a + b
+    function add() returns int
+            return a + b
 
 
-    function test()
-        Pair p = new Pair(2,4)
-        int sum = p.add()
-        print(sum)
-
+function test()
+    Pair p = new Pair(2,4)
+    int sum = p.add()
+    print(sum)
+```
 
 
 
 In this example the constructor takes two integers a and b as parameters and sets the class variables to those.
 You can define more than one constructor as long as the parameters differ.
 
+```wurst
+class Pair
+    int a
+    int b
 
-    class Pair
-        int a
-        int b
+    construct( int pA, int pB )
+            a = pA
+            b = pB
 
-        construct( int pA, int pB )
-                a = pA
-                b = pB
+    construct( int pA, int pB, int pC )
+            a = pA
+            b = pB
+        a += pC
+        b += pC
 
-        construct( int pA, int pB, int pC )
-                a = pA
-                b = pB
-            a += pC
-            b += pC
-
-    function test()
-        Pair p = new Pair(2,4)
-        Pair p2 = new Pair(3,4,5)
-
+function test()
+    Pair p = new Pair(2,4)
+    Pair p2 = new Pair(3,4,5)
+```
 
 
 
@@ -100,31 +99,31 @@ Depending on parameter-type and -count Wurst automatically decides which constru
 
 The _this_ keyword refers to the current instance of the class on which the function was called. This also allows us to name the parameters the same as the class variables.
 However it can be left out in classfunctions, as seen above.
+```wurst
+class Pair
+    int a
+    int b
 
-    class Pair
-        int a
-        int b
-
-        // With the this keyword we can access the classmembers
-        construct( int a, int b )
-                this.a = a
-                this.b = b
-
+    // With the this keyword we can access the classmembers
+    construct( int a, int b )
+            this.a = a
+            this.b = b
+```
 
 ## ondestroy
 
 Each class can have one _ondestroy_ block. This block is executed before the instance is destroyed.
 Ondestroy blocks are defined as previously shown
 
+```wurst
+class UnitWrapper
+    unit u
 
-    class UnitWrapper
-        unit u
+    ...
 
-        ...
-
-        ondestroy
-            RemoveUnit(u)
-
+    ondestroy
+        RemoveUnit(u)
+```
 
 
 ## Static Elements
@@ -132,19 +131,20 @@ Ondestroy blocks are defined as previously shown
 You can declare variables and functions as _static_ by writing the keyword "static" in front of the declaration. Static variables and functions belong to the class whereas
 other elements belong to instances of the class. So you can call static functions without having an instance of the class.
 
+```wurst
+class Terrain
+    static real someVal = 12.
 
-    class Terrain
-        static real someVal = 12.
+    static int array someArr
 
-        static int array someArr
+    static function getZ( real x, real y ) returns real
+        ...
 
-        static function getZ( real x, real y ) returns real
-            ...
-
-    function foo()
-        real z = Terrain.getZ( 0, 0 ) // call with $Classname$.$StaticFunctionName$()
-        real r = Terrain.someVal // Same with members
-        real s = Terrain.someArr[0]
+function foo()
+    real z = Terrain.getZ( 0, 0 ) // call with $Classname$.$StaticFunctionName$()
+    real r = Terrain.someVal // Same with members
+    real s = Terrain.someArr[0]
+```
 
 ## Dynamic, Sized Array-Members
 
@@ -152,15 +152,16 @@ Wurstscript supports sized arrays as classmembers by translating it to SIZE time
 
 Example Usage:
 
-    class Rectangle
-        Point array[4] points
+```wurst
+class Rectangle
+    Point array[4] points
 
-        function getPoint(int index)
-            return points[index]
+    function getPoint(int index)
+        return points[index]
 
-        function setPoint(int index, Point nP)
-            points[index] = nP
-
+    function setPoint(int index, Point nP)
+        points[index] = nP
+```
 
 ## Visibility Rules
 
@@ -182,27 +183,27 @@ Functions inherited from super classes can be overridden in the subclass. Such f
 
 
 ### Example
-
-    class Missile
-        construct(string fx, real x, real y)
-            // ...
-
-        function onCollide(unit u)
-            skip
-
+```wurst
+class Missile
+    construct(string fx, real x, real y)
         // ...
 
-    // a fireball missile is a special kind of missile
-    class FireballMissile extends Missile
-        // we construct it using a fireball fx
-        construct(real x, real y)
-            super("Abilities\\Weapons\\RedDragonBreath\\RedDragonMissile.mdl", x, y)
-        // a fireball does some special things when it collides
-        // with a unit, so we override the onCollide method
-        override function onCollide(unit u)
-            // create a big explosion here ;)
-            //...
+    function onCollide(unit u)
+        skip
 
+    // ...
+
+// a fireball missile is a special kind of missile
+class FireballMissile extends Missile
+    // we construct it using a fireball fx
+    construct(real x, real y)
+        super("Abilities\\Weapons\\RedDragonBreath\\RedDragonMissile.mdl", x, y)
+    // a fireball does some special things when it collides
+    // with a unit, so we override the onCollide method
+    override function onCollide(unit u)
+        // create a big explosion here ;)
+        //...
+```
 
 ## Typecasting
 
@@ -213,33 +214,33 @@ You need typecasting for several reasons.
 One being to save class instances and for example attaching them onto a timer, like done in TimerUtils.wurst
 This process can also be reversed (casting from int to a classtype).
 
+```wurst
+class Test
+    int val
 
-    class Test
-        int val
-
-    init
-        Test t = new Test()
-        int i = t castTo int
-
+init
+    Test t = new Test()
+    int i = t castTo int
+```
 
 
 Typecasting is sometimes useful when using subtyping. If you have an object of static type A but know
 that the dynamic type of the object is B, you can cast the object to B to change the static type.
 
+```wurst
+class A
 
-    class A
+class B extends A
+    function special()
+        ...
 
-    class B extends A
-        function special()
-            ...
-
-    init
-        A a = new B()
-        // we know that a is actually of type B, so we can safely cast it to B:
-        B b = a castTo B
-        // now we can call functions from class B
-        b.special()
-
+init
+    A a = new B()
+    // we know that a is actually of type B, so we can safely cast it to B:
+    B b = a castTo B
+    // now we can call functions from class B
+    b.special()
+```
 
 
 _Note_: You should avoid castTo whenever possible. Casts are not checked at runtime so they can go horribly wrong.
@@ -255,43 +256,44 @@ the original type.
 It is easier to understand with an example:
 
 ### Example 1
+```wurst
+class A
+    function printOut()
+        print("I'm A")
 
-    class A
-        function printOut()
-            print("I'm A")
+class B extends A
+    override function printOut()
+        print("I'm B")
 
-    class B extends A
-        override function printOut()
-            print("I'm B")
-
-    init
-        A a = new B()
-        a.printOut()
-        // this will print "I'm B", even though it's a type A variable
-
+init
+    A a = new B()
+    a.printOut()
+    // this will print "I'm B", even though it's a type A variable
+```
 ### Example 2
+```wurst
+class A
+    string name
 
-    class A
-        string name
+    construct(string name)
+        this.name = name
 
-        construct(string name)
-            this.name = name
-
-        function printName()
-            print("Instance of A named: " + name )
+    function printName()
+        print("Instance of A named: " + name )
 
 
-    class B extends A
+class B extends A
 
-        construct(string name)
-            super(name)
+    construct(string name)
+        super(name)
 
-        override function printName()
-            print("Instance of B named: " + name )
+    override function printName()
+        print("Instance of B named: " + name )
 
-    init
-        A a = new B("first") // This works because B extends A
-        a.printName() // This will print "Instance of B named: first", because a is an Instance of B.
+init
+    A a = new B("first") // This works because B extends A
+    a.printName() // This will print "Instance of B named: first", because a is an Instance of B.
+```
 
 This is especially useful when iterating through ClassInstances of the same supertype,
 meaning you don't have to cast the instance to it's proper subtype.
@@ -302,36 +304,36 @@ When you override a method you can still call to the original implementation by 
 subclasses often just add some functionality to its base classes.
 
 As an example consider a fireball spell for which we want to create a more powerful version:
-
-    class FireBall
+```wurst
+class FireBall
+    ...
+    function hitUnit(unit u, real damage)
         ...
-        function hitUnit(unit u, real damage)
-            ...
 
-    class PowerFireBall extends FireBall
-        ...
-        // here we override the original behavior of the hitUnit function
-        override function hitUnit(unit u, real damage)
-            // first we create a big explosion effect
-            createSomeBigExplosionEffect(u)
-            // then we call the original hitUnit function but with doubled damage
-            super.hitUnit(u, damage*2)
-
+class PowerFireBall extends FireBall
+    ...
+    // here we override the original behavior of the hitUnit function
+    override function hitUnit(unit u, real damage)
+        // first we create a big explosion effect
+        createSomeBigExplosionEffect(u)
+        // then we call the original hitUnit function but with doubled damage
+        super.hitUnit(u, damage*2)
+```
 The **super** keyword also should be used when defining custom constructors. The Constructor of the superclass has to be called in the constructor of the subclass. When no super constructor call is given, the compiler will try to call a constructor with no arguments. If no such constructor exists, then you will get an error like: "Incorrect call to super constructor: Missing parameters."
-
-    class Missile
+```wurst
+class Missile
+    ...
+    construct(vec2 position)
         ...
-        construct(vec2 position)
-            ...
 
-    class TimedMissile extends Missile
+class TimedMissile extends Missile
+    ...
+    construct(vec2 position, real duration)
+        // Here the constructor of the superclass is called
+        // The super statement has to be the first statement in the constructor of the subclass
+        super(position)
         ...
-        construct(vec2 position, real duration)
-            // Here the constructor of the superclass is called
-            // The super statement has to be the first statement in the constructor of the subclass
-            super(position)
-            ...
-
+```
 
 ## instanceof
 
@@ -348,26 +350,28 @@ to check the type of an integer.
 The compiler will try to reject instanceof expressions, which will always yield true or always yield false.
 
 ###Example
+```wurst
+class A
 
-    class A
+class B extends A
 
-    class B extends A
+init
+    A a = new B()
 
-    init
-        A a = new B()
-
-        if a instanceof B
-            print("It's a B")
+    if a instanceof B
+        print("It's a B")
+```
 
 ## typeId
 
 *NOTE*: typeIds are an experimental feature. Try to avoid using them.
 
 Sometimes it is necessary to check the exact type of an object. To do this you can write "a.typeId" if a is an object or "A.typeId" if A is a class.
-
-        // check if a is of class A
-        if a.typeId == A.typeId
-            print("It's an A")
+```wurst
+// check if a is of class A
+if a.typeId == A.typeId
+    print("It's an A")
+```
 
 The typeId is an integer which is unique for each class inside a type partition.
 
@@ -386,8 +390,9 @@ but you can create subclasses for it which are not abstract.
 
 An abstract function is declared with the keyword 'abstract' and by leaving out
 an implementation.
-
-    abstract function onHit()
+```wurst
+abstract function onHit()
+```
 
 Abstract classes are similar to interfaces, but they can have own, implemented
 functions and variables like normal classes.
@@ -400,26 +405,26 @@ Take Collision-Responses as example. You have several Bodies in your map, and
 you want each of them to behave differently.
 You could do this by centralizing the updating function, or by using abstract
 classes like so:
+```wurst
+abstract class CollidableObject
 
-    abstract class CollidableObject
+    abstract function onHit()
 
-        abstract function onHit()
+    function checkCollision(CollidableObject o)
+        if this.inRange(o)
+            onHit()
+            o.onHit()
 
-        function checkCollision(CollidableObject o)
-            if this.inRange(o)
-              onHit()
-              o.onHit()
+class Ball extends CollidableObject
 
-    class Ball extends CollidableObject
+    override function onHit()
+        print("I'm a ball")
 
-        override function onHit()
-            print("I'm a ball")
+class Rect extends CollidableObject
 
-    class Rect extends CollidableObject
-
-        override function onHit()
-            print("I'm a Rect")
-
+    override function onHit()
+        print("I'm a Rect")
+```
 
 
 Because CollidableObject requires it's subclasses to implement the function
@@ -432,21 +437,21 @@ from its superclass, it has to be abstract, too.
 
 # Interfaces
 
+```wurst
+interface Listener
+    function onClick()
 
-    interface Listener
-        function onClick()
-
-        function onAttack( real x, real y ) returns boolean
-
-
-    class ExpertListener implements Listener
-        function onClick()
-            print("clicked")
+    function onAttack( real x, real y ) returns boolean
 
 
-        function onAttack( real x, real y ) returns boolean
-            AddSpecialEffect(EFFECT_STRING, x ,y)
+class ExpertListener implements Listener
+    function onClick()
+        print("clicked")
 
+
+    function onAttack( real x, real y ) returns boolean
+        AddSpecialEffect(EFFECT_STRING, x ,y)
+```
 
 
 An _interface_ is a group of related functions with empty bodies.
@@ -483,86 +488,86 @@ Generic type parameter and arguments are
 written in angled  bracket s  (<  an d >) after the identifier.
 
 
+```wurst
+// a generic interface for Sets with type parameter T
+interface Set<T>
+    // adds an element to the set
+    function add(T t)
 
-    // a generic interface for Sets with type parameter T
-    interface Set<T>
-        // adds an element to the set
-        function add(T t)
+    // removes an element from the set
+    function remove(T t)
 
-        // removes an element from the set
-        function remove(T t)
+    // returns the number of elements in the set
+    function size() returns int
 
-        // returns the number of elements in the set
-        function size() returns int
+    // checks whether a certain element is in the set
+    function contains(T t) returns boolean
 
-        // checks whether a certain element is in the set
-        function contains(T t) returns boolean
-
-    class SetImpl<T> implements Set<T>
-        // [...] implementation of the interface
-
+class SetImpl<T> implements Set<T>
+    // [...] implementation of the interface
+```
 If we have a class defined like this, we can then use it with a concrete type (e.g. Missile):
-
-    // create a set of missiles
-    Set<Missile> missiles = new SetImpl<Missile>();
-    // add a missile m
-    missiles.add(m);
-
+```wurst
+// create a set of missiles
+Set<Missile> missiles = new SetImpl<Missile>();
+// add a missile m
+missiles.add(m);
+```
 Generic parameters in Wurst can be bound to integers, class types and interface types directly.
 In order to bind generic parameters to primitive-, handle- and tuple types you have to provide the functions
+```wurst
+function [TYPE]ToIndex([TYPE] t) returns int
 
-    function [TYPE]ToIndex([TYPE] t) returns int
-
-    function [TYPE]FromIndex(int index) returns [TYPE]
-        return ...
-
+function [TYPE]FromIndex(int index) returns [TYPE]
+    return ...
+```
 The typecasting functions for primitive- and handle types are provided in _Typecasting.wurst_ using the fogstate bug.
+```wurst
+function unitToIndex(unit u) returns int
+    return u.getHandleId()
 
-    function unitToIndex(unit u) returns int
-        return u.getHandleId()
-
-    function unitFromIndex(int index) returns unit
-        data.saveFogState(0,ConvertFogState(index))
-        return data.loadUnit(0)
-
+function unitFromIndex(int index) returns unit
+    data.saveFogState(0,ConvertFogState(index))
+    return data.loadUnit(0)
+```
 ## Generic Functions
 
 Functions can use generic types. The type parameter is written after the name of the function.
 In the following example the function *forall* tests if a predicate is true for all elements in a list.
 The function has to be generic, because it has to work on all kinds of lists.
+```wurst
+function forall<T>(LinkedList<T> l, LinkedListPredicate<T> pred) returns boolean
+    for x in l
+        if not pred.isTrueFor(x)
+            return false
+    return true
 
-    function forall<T>(LinkedList<T> l, LinkedListPredicate<T> pred) returns boolean
-        for x in l
-            if not pred.isTrueFor(x)
-                return false
-        return true
-
-    // usage:
-        LinkedList<int> l = ...
-        // check if all elements in the list are even
-        if forall<int>(l, (int x) -> x mod 2 == 0)
-            print("true")
-
+// usage:
+    LinkedList<int> l = ...
+    // check if all elements in the list are even
+    if forall<int>(l, (int x) -> x mod 2 == 0)
+        print("true")
+```
 When calling a generic function, the type arguments can be omitted if they can be inferred
 from the arguments to the function:
-
+```wurst
+...
+if forall(l, (int x) -> x mod 2 == 0)
     ...
-    if forall(l, (int x) -> x mod 2 == 0)
-        ...
-
+```
 Extension functions can also be generic, as shown by the following example:
+```wurst
+function LinkedList<T>.forall<T>(LinkedListPredicate<T> pred) returns boolean
+    for x in this
+        if not pred.isTrueFor(x)
+            return false
+    return true
 
-    function LinkedList<T>.forall<T>(LinkedListPredicate<T> pred) returns boolean
-        for x in this
-            if not pred.isTrueFor(x)
-                return false
-        return true
-
-    // usage:
+// usage:
+    ...
+    if l.forall((int x) -> x mod 2 == 0)
         ...
-        if l.forall((int x) -> x mod 2 == 0)
-            ...
-
+```
 
 # Modules
 
@@ -578,40 +583,39 @@ If you know object oriented languages like Java or C#: Modules are like abstract
 
 In this example we just have a class which uses a module A. The resulting program behaves as if the code from module A would be pasted into Class C.
 
+```wurst
+module A
+    public function foo()
+        ...
 
-    module A
-        public function foo()
-            ...
-
-
-    class C
-        use A
-
+class C
+    use A
+```
 
 ## Example 2
 
 Modules are more than just a mechanism to copy code. Classes and modules can override functions defined in used modules:
 
+```wurst
+// a module to store an integer variable
+module IntContainer
+    int x
 
-    // a module to store an integer variable
-    module IntContainer
-        int x
+    public function getX() returns int
+        return int
 
-        public function getX() returns int
-            return int
+    public function setX(int x)
+        this.x = x
 
-        public function setX(int x)
-            this.x = x
+// a container which only stores positive ints
+module PositiveIntContainer
+    use IntContainer
 
-    // a container which only stores positive ints
-    module PositiveIntContainer
-        use IntContainer
-
-        // override the setter to only store positive integers
-        override function setX(int x)
-            if x >= 0
-                IntContainer.setX(x)
-
+    // override the setter to only store positive integers
+    override function setX(int x)
+        if x >= 0
+            IntContainer.setX(x)
+```
 
 ## Visibility & Usage Rules
 
