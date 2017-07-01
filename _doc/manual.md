@@ -9,4 +9,5 @@ sections:
   - /manual/introduction
   - /manual/concepts
   - /manual/classes
+  - /manual/concepts_advanced
 ---
