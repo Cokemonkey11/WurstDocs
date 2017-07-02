@@ -119,32 +119,25 @@ nesting ifs and else ifs, with the special default case.
 while a > b // while-loop with input condition
     ...
 
-for int i = 0 to 10 // for-loop
+for i = 0 to 10 // for-loop
     ...
 
-for int i = 0 to 10 step 2 // for-loop with step 2
+for i = 0 to 10 step 2 // for-loop with step 2
     ...
 
-for int i = 10 downto 0 // wurst can also count downwards
+for i = 10 downto 0 // wurst can also count downwards
     ...
 
-for unit u in someGroup // loop over all units in a group
+for u in someGroup // loop over all units in a group
     ...
 
-for unit u from someGroup // loop over all units in group and remove the units from the group
+for u from someGroup // loop over all units in group and remove the units from the group
     ...
 
-for int i in myList
+for i in myList
     ...
 ```
 
-In for loops you can also omit the type of the loop variable.
-```wurst
-for i = 0 to 10
-    ...
-for u in someGroup
-    ...
-```
 ### For-in/from Loops
 
 The for-in loop lets you iterate over any object which provides an iterator.
