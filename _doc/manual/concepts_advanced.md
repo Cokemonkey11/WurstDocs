@@ -1,10 +1,13 @@
 ---
 title: Advanced Concepts
 sections:
-- Constructors
-- This
-- Ondestroy
+- Enums
+- Tuple Types
+- Extension Functions
 - Packages
+- Lambdas and Closures
+- Function Overloading
+- Operator Overloading
 ---
 
 # Enums
@@ -142,7 +145,7 @@ public function vec2.lengthSquared returns real
 	return this.x*this.x+this.y*this.y
 ```
 
-# Lambda expressions and Closures
+# Lambdas and Closures
 
 A lambda expression (also called anonymous function) is a lightweight way to provide an implementation
 of a functional interface or abstract class (To keep the text simple, the following
@@ -337,9 +340,7 @@ thus there is no object which has to be destroyed. The lambda expression will ju
 be translated to a normal Jass function, so there is no performance overhead when
 using lambda expressions in this way.
 
-# Advanced Concepts
-
-## Function Overloading
+# Function Overloading
 
 Function overloading allows you to have several functions with the same name.
 The compiler will then decide which function to call based on the static type
@@ -392,7 +393,7 @@ with a value of type B, both functions would be viable. Other languages just tak
 "most specific type" but Wurst does not allow this. If A and B are incomparable types, the overloading is allowed.
 
 
-## Operator Overloading
+# Operator Overloading
 
 Operator Overloading allows you to change the behavior of internal operators +, -, \* and / for custom arguments.
 A quick example from the standard library (Vectors.wurst):
@@ -417,14 +418,14 @@ In order to define an overloading function it has to be named as following:
 *  "op_mult"
 /  "op_divReal"
 ```
-## Object Editing
+# Object Editing
 
 Creating Object-Editor Objects via Wurst code.
 
 *NOTE:* Object Editing hardly works at the moment, so you should only use it for fun but not for profit.
 Do not use it for a real project yet!
 
-### Compiletime Functions
+## Compiletime Functions
 
 Compiletime Functions are functions, that are executed when compiling your script/map.
 They mainly offer the possibility to create Object-Editor Objects via code.

@@ -185,7 +185,7 @@ With this two functions you get an iterator which can be used in for-from loops.
 
 To make a type usable in for-in loops you have to provide
 
--  function *iterator()* returns Iterator
+-  function **iterator()** returns Iterator
 
 for your type, that returns the object for the iteration.
 This can either be a handle, like in the group-iterator or an object like the List-iterator.

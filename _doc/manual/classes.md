@@ -4,7 +4,10 @@ sections:
 - Constructors
 - This
 - Ondestroy
-- Packages
+- Static Elements
+- Inheritance
+- Interfaces
+- Generics
 ---
 
 Classes are easy, powerful and very helpful constructs. A _class_ defines data and related functions working with this data. Take a look at this small example:
@@ -145,7 +148,7 @@ function foo()
     real s = Terrain.someArr[0]
 ```
 
-## Dynamic, Sized Array-Members
+## Array Members
 
 Wurstscript supports sized arrays as classmembers by translating it to SIZE times arrays and then resolve the array in a get/set function via binary search.
 
@@ -167,8 +170,7 @@ class Rectangle
 By default class elements are visible everywhere. You can add the modifiers _private_ or _protected_ in front of a variable or function definition to restrict its visibility.
 Private elements can only be seen from within the class. Protected elements can be seen within the enclosing package and in subclasses.
 
-## Subclassing
-
+## Inheritance
 A class can _extend_ an other class. The class then inherits all the non-private functions and variables from that class
 and can be used anywhere where the super class can be used.
 
